@@ -56,7 +56,7 @@ public class MenuMainActivity extends AppCompatActivity {
     Button bHist;
     @OnClick(R.id.history_geomemo_button)
     public void historyGeoMemo(View view){
-        Log.d(LOG_TAG,"hist" + mDB.geofenceMemoDao().getAll().get(0).getGeoName());
+        //Log.d(LOG_TAG,"hist" + mDB.geofenceMemoDao().getAll().get(0).getGeoName());
     }
 
     @Override
@@ -93,6 +93,8 @@ public class MenuMainActivity extends AppCompatActivity {
     private void startActivityGeoMemo(Class name, int activityCode){
 
         startActivityForResult(new Intent(this, name), activityCode);
+
+
 
     }
 

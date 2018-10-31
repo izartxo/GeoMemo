@@ -1,5 +1,6 @@
 package geomemo.app.code.develop.izartxo.geomemoapp.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface GeofenceMemoDao {
 
     @Query("SELECT * FROM geofencememo")
-    List<GeofenceMemo> getAll();
+    LiveData<List<GeofenceMemo>> getAll();
 
     @Query("SELECT * FROM geofencememo")
     Cursor getCursorAll();
