@@ -32,6 +32,9 @@ public interface GeofenceMemoDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateGeoMemo(GeofenceMemo memo);
 
+    @Query("UPDATE geofencememo SET active=0 WHERE geoname=:geoName")
+    void updateGeoMemoState(String geoName);
+
     @Delete
     void delete(GeofenceMemo memos);
 

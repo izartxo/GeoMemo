@@ -1,29 +1,39 @@
 package geomemo.app.code.develop.izartxo.geomemoapp.adapter;
 
 import android.content.Context;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import geomemo.app.code.develop.izartxo.geomemoapp.R;
+import geomemo.app.code.develop.izartxo.geomemoapp.database.GMActives;
 import geomemo.app.code.develop.izartxo.geomemoapp.database.GeofenceMemo;
+import geomemo.app.code.develop.izartxo.geomemoapp.ui.ShowActivity;
+import geomemo.app.code.develop.izartxo.geomemoapp.util.GMFactory;
 
 public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.ShowGeoMemoViewHolder> {
 
-    private final static String LOG_TAG = ShowGeoMemoAdapter.class.getSimpleName();
+    private final static String LOG_TAG = "*******" + ShowGeoMemoAdapter.class.getSimpleName();
 
-    private List<GeofenceMemo> mGeoMemoList;
+    private List<GMActives> mGeoMemoList;
     private Context mContext;
+    private ShowActivity.OnDeleteListener mOnDelete;
 
-    public ShowGeoMemoAdapter(Context mContext) {
+    public ShowGeoMemoAdapter(Context mContext, ShowActivity.OnDeleteListener OnDelete) {
         this.mContext = mContext;
-
+        mOnDelete = OnDelete;
     }
 
     @NonNull
@@ -34,10 +44,22 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShowGeoMemoViewHolder holder, int position) {
-        GeofenceMemo geofenceMemo = mGeoMemoList.get(position);
+    public void onBindViewHolder(@NonNull ShowGeoMemoViewHolder holder, final int position) {
+        final GMActives geofenceMemo = mGeoMemoList.get(position);
 
         holder.geoNameTextview.setText(geofenceMemo.getGeoName() + " // " + geofenceMemo.getGeoMemo());
+        holder.geoLatLonTextview.setText(geofenceMemo.getGeoLatitude() + " // " + geofenceMemo.getGeoLongitude());
+        holder.bDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(LOG_TAG, "---" + position);
+                final String geoname = mGeoMemoList.get(position).getGeoName();
+                mGeoMemoList.remove(position);
+                //mOnDelete.OnDelete(geoname);
+                GMFactory.readGeoMemo(mContext, geoname);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -50,12 +72,27 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
     class ShowGeoMemoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         final TextView geoNameTextview;
+        final TextView geoLatLonTextview;
+        final ImageButton bDelete;
+
+        // Button to delete active GeoMemo
+        //@BindView(R.id.show_geomemo_item_imagebutton)
+        //ImageButton bDelete;
+        //@OnClick(R.id.show_geomemo_item_imagebutton)
+        //public void deleteGeoMemo(){
+        //    mGeoMemoList.remove(getAdapterPosition());
+        //}
+        /////
 
         public ShowGeoMemoViewHolder(View itemView) {
             super(itemView);
 
             geoNameTextview = (TextView) itemView.findViewById(R.id.show_geomemo_item_textview);
+            geoLatLonTextview= (TextView) itemView.findViewById(R.id.show_geomemo_latlon_item_textview);
+            //
+            bDelete = (ImageButton) itemView.findViewById(R.id.show_geomemo_item_imagebutton);
 
+            //
             itemView.setOnClickListener(this);
         }
 
@@ -65,7 +102,7 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
         }
     }
 
-    public void setGeoMemoData(List<GeofenceMemo> listGeoMemos){
+    public void setGeoMemoData(List<GMActives> listGeoMemos){
         mGeoMemoList = listGeoMemos;
     }
 }

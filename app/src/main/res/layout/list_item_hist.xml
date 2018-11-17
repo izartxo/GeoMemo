@@ -11,31 +11,34 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/show_geomemo_item_textview"
+            android:id="@+id/hist_geomemo_item_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:padding="3dp"
+
+            android:padding="1dp"
              />
 
         <TextView
-        android:id="@+id/show_geomemo_latlon_item_textview"
+        android:id="@+id/hist_geomemo_latlon_item_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:padding="3dp"
+
+        android:padding="1dp"
         />
 
-        <ImageButton
-        android:id="@+id/show_geomemo_item_imagebutton"
-        android:layout_width="wrap_content"
+        <TextView
+        android:id="@+id/hist_geomemo_creation_item_textview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-            android:maxHeight="64dp"
-            android:minHeight="64dp"
-        android:layout_gravity="end"
-            android:src="@mipmap/brain"
-        android:padding="3dp"
-            />
+        android:padding="1dp"
+        />
+
+        <TextView
+        android:id="@+id/hist_geomemo_history_item_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="1dp"
+        />
 
 
 

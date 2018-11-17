@@ -1,5 +1,6 @@
 package geomemo.app.code.develop.izartxo.geomemoapp.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface GMHistoryDao {
 
     @Query("SELECT * FROM gmhistory")
-    List<GMHistory> getAll();
+    LiveData<List<GMHistory>> getAll();
 
     @Query("SELECT * FROM gmhistory")
     Cursor getCursorAll();
@@ -24,6 +25,10 @@ public interface GMHistoryDao {
 
     @Insert
     void insertAll(GMHistory... gmHistory);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertGMHistory(GMHistory memo);
+
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateGMHistory(GMHistory gmHistory);

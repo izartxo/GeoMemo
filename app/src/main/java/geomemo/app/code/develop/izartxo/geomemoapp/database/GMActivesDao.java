@@ -1,5 +1,6 @@
 package geomemo.app.code.develop.izartxo.geomemoapp.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface GMActivesDao {
 
     @Query("SELECT * FROM gmactives")
-    List<GMActives> getAll();
+    LiveData<List<GMActives>> getAll();
 
     @Query("SELECT * FROM gmactives")
     Cursor getCursorAll();
@@ -26,8 +27,14 @@ public interface GMActivesDao {
     @Insert
     void insertAll(GMActives... gmActives);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertGeoMemo(GMActives activeMemo);
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateGMActive(GMActives gmActives);
+
+    @Query("DELETE FROM gmactives WHERE geoname=:geoName")
+    void deleteGMActive(String geoName);
 
     @Delete
     void delete(GMActives gmActives);
