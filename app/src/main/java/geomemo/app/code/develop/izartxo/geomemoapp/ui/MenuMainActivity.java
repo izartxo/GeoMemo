@@ -19,12 +19,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.Status;
@@ -50,14 +52,19 @@ import geomemo.app.code.develop.izartxo.geomemoapp.database.AppDatabase;
 import geomemo.app.code.develop.izartxo.geomemoapp.database.GMActives;
 import geomemo.app.code.develop.izartxo.geomemoapp.database.GeofenceMemo;
 import geomemo.app.code.develop.izartxo.geomemoapp.util.BroadcastService;
+import geomemo.app.code.develop.izartxo.geomemoapp.util.GMActiveAsyncTask;
 import geomemo.app.code.develop.izartxo.geomemoapp.util.GMFactory;
 import geomemo.app.code.develop.izartxo.geomemoapp.util.GeoReceiver;
+import geomemo.app.code.develop.izartxo.geomemoapp.util.LocationUtil;
 import geomemo.app.code.develop.izartxo.geomemoapp.util.MemoAsyncTask;
+import geomemo.app.code.develop.izartxo.geomemoapp.widget.GeoMemoAppWidgetProvider;
 
 
 public class MenuMainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "*******" + MenuMainActivity.class.getSimpleName();
+
+    private static final int RESULT_FAILED = 2;
 
     private final static int PERMISSION = 0xFF;
     private static final int MAP_ACTIVITY_CODE = 0x01;
@@ -78,7 +85,8 @@ public class MenuMainActivity extends AppCompatActivity {
     @OnClick(R.id.add_geomemo_button)
     public void addGeoMemo(View view){
         Log.d(LOG_TAG, "add geomemo map button");
-        startActivityGeoMemo(MapActivity.class, MAP_ACTIVITY_CODE);
+        view.setEnabled(false);
+        startActivityGeoMemo(MapsActivity.class, MAP_ACTIVITY_CODE);
     }
 
     @BindView(R.id.show_geomemo_button)
@@ -86,6 +94,7 @@ public class MenuMainActivity extends AppCompatActivity {
     @OnClick(R.id.show_geomemo_button)
     public void showGeoMemo(View view){
         Log.d(LOG_TAG, "show geomemo button");
+        view.setEnabled(false);
         startActivityGeoMemo(ShowActivity.class, SHOW_ACTIVITY_CODE);
     }
 
@@ -94,6 +103,7 @@ public class MenuMainActivity extends AppCompatActivity {
     @OnClick(R.id.history_geomemo_button)
     public void historyGeoMemo(View view){
         Log.d(LOG_TAG,"hist geomemo button");
+        view.setEnabled(false);
         startActivityGeoMemo(HistActivity.class, HIST_ACTIVITY_CODE);
     }
 
@@ -108,8 +118,16 @@ public class MenuMainActivity extends AppCompatActivity {
         //mDB.gmActivesDao().deleteAll();
         //mDB.geofenceMemoDao().deleteAll();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar.setTitle("GeoMemoApp");
+
+        setSupportActionBar(toolbar);
+
+
         ButterKnife.bind(this);
 
+        // !!!! Tranpa dago eginda hemen birpasatu
         if (false && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)) {
             startForegroundService(new Intent(this,BroadcastService.class));
         }
@@ -122,16 +140,24 @@ public class MenuMainActivity extends AppCompatActivity {
 
     }
 
+    private void enableButtons(){
+        bAdd.setEnabled(true);
+        bShow.setEnabled(true);
+        bHist.setEnabled(true);
+    }
+
     @Override
     protected void onPause(){
         super.onPause();
         Log.d(LOG_TAG, "ONPAUSE");
+
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         Log.d(LOG_TAG, "ONRESUME");
+        enableButtons();
         checkPermissions();
 
     }
@@ -153,7 +179,7 @@ public class MenuMainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK){
                     geoMemo2Room(data);
                 }else
-                    showSnackBar(0);
+                    showSnackBar(resultCode);
                 break;
             case SHOW_ACTIVITY_CODE:
                 break;
@@ -198,15 +224,20 @@ public class MenuMainActivity extends AppCompatActivity {
 
             // Insert new GeoMemo
             //mDB.geofenceMemoDao().insertGeoMemo(geofenceMemo);
-            new MemoAsyncTask(mDB, geofenceMemo).execute();
+            new MemoAsyncTask(mDB, geofenceMemo).execute(MemoAsyncTask.INSERT);
             // Insert new GeoMemo on GMActives because of is active
-            mDB.gmActivesDao().insertGeoMemo(GMFactory.createGMActive(geofenceMemo));
+            new GMActiveAsyncTask(mDB, GMFactory.createGMActive(geofenceMemo)).execute(GMActiveAsyncTask.INSERT);
+            //mDB.gmActivesDao().insertGeoMemo(GMFactory.createGMActive(geofenceMemo));
 
-            showSnackBar(1);
+            // Intent que no afecta al widget...
+            //Intent i = new Intent(GeoMemoAppWidgetProvider.APP_UPD);
+            //sendBroadcast(i);
+
+            showSnackBar(RESULT_OK);
 
         }catch(Exception e){
             Log.d(LOG_TAG, "ERROR geoMemo2Room: " + e.getMessage());
-            showSnackBar(0);
+            showSnackBar(RESULT_FAILED);
         }
     }
     //
@@ -214,7 +245,18 @@ public class MenuMainActivity extends AppCompatActivity {
     private void showSnackBar(int result){
 
         Log.d(LOG_TAG, "SNACKBAR: " + result);
-        String message = result == 0 ? "Data store fails" : "Data store OK";
+        String message = "";
+
+        switch (result){
+            case RESULT_CANCELED:
+                message = "Nothing...";
+                break;
+            case RESULT_OK:
+                message = "Data store OK";
+                break;
+            case RESULT_FAILED:
+                message = "Data store fails";
+        }
         final Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), message, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
@@ -335,7 +377,9 @@ public class MenuMainActivity extends AppCompatActivity {
         ComponentName myService = new ComponentName(this, BroadcastService.class);
         JobInfo myJob = new JobInfo.Builder(BroadcastService.BROADCAST_RECEIVER_ID, myService)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                //.setMinimumLatency(10 * 1000) // 10 sg
                 .build();
+
 
         JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(myJob);

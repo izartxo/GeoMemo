@@ -10,7 +10,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -40,7 +42,7 @@ public class ShowActivity extends AppCompatActivity {
     /*@BindView(R.id.show_geomemo_textview)
     TextView tGeoMemoInfo;
 */
-    @BindView(R.id.test_button)
+   /* @BindView(R.id.test_button)
     Button test;
     @OnClick(R.id.test_button)
     public void test(){
@@ -48,7 +50,7 @@ public class ShowActivity extends AppCompatActivity {
         mDB.geofenceMemoDao().deleteAll();
         mDB.gmActivesDao().deleteAll();
         mDB.gmHistoryDao().deleteAll();
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,24 @@ public class ShowActivity extends AppCompatActivity {
 
         mDB = AppDatabase.getInstance(getApplicationContext());
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar.setTitle("Show Geomemos");
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //What to do on back clicked
+                finish();
+            }
+        });
+
+
+
 
         ButterKnife.bind(this);
 
@@ -82,6 +100,10 @@ public class ShowActivity extends AppCompatActivity {
         super.onResume();
 
         showViewModel();
+
+        GMFactory.sendMemo(this, "J");
+        GMFactory.sendMemo(this, "Xxx");
+        GMFactory.sendMemo(this, "Turk8");
     }
 
     @Override
@@ -105,5 +127,7 @@ public class ShowActivity extends AppCompatActivity {
                 mShowGeoMemoAdapter.notifyDataSetChanged();
             }
         });
+
+
     }
 }

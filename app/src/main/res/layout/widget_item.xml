@@ -6,11 +6,22 @@
 
 
     <TextView
-        android:id="@+id/geomemo_widget_item"
+        android:id="@+id/geomemo_widget_item_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15dp"
         android:layout_margin="3dp"
+        android:textColor="#FFEEFF"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/geomemo_widget_item_memo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_margin="3dp"
+        android:textColor="#FFEEFF"
         />
 
 </LinearLayout>

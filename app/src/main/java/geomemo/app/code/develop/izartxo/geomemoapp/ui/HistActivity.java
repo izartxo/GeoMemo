@@ -10,12 +10,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -31,8 +34,12 @@ import geomemo.app.code.develop.izartxo.geomemoapp.database.AppDatabase;
 import geomemo.app.code.develop.izartxo.geomemoapp.database.GMActives;
 import geomemo.app.code.develop.izartxo.geomemoapp.database.GMHistory;
 import geomemo.app.code.develop.izartxo.geomemoapp.database.GeofenceMemo;
+import geomemo.app.code.develop.izartxo.geomemoapp.util.GMActiveAsyncTask;
 import geomemo.app.code.develop.izartxo.geomemoapp.util.GMFactory;
 import geomemo.app.code.develop.izartxo.geomemoapp.util.HistAsyncTask;
+import geomemo.app.code.develop.izartxo.geomemoapp.util.MemoAsyncTask;
+
+import static android.support.v7.widget.DividerItemDecoration.HORIZONTAL;
 
 public class HistActivity extends AppCompatActivity {
 
@@ -53,8 +60,22 @@ public class HistActivity extends AppCompatActivity {
 
         mDB = AppDatabase.getInstance(getApplicationContext());
 
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar.setTitle("History");
+
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //What to do on back clicked
+                finish();
+            }
+        });
 
         ButterKnife.bind(this);
 
@@ -76,7 +97,17 @@ public class HistActivity extends AppCompatActivity {
 
         mHistGeoMemoAdapter = new HistGeoMemoAdapter(this);
 
+        RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                super.onDraw(c, parent, state);
+            }
+        };
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+
+
         mRecyclerView.setAdapter(mHistGeoMemoAdapter);
         /*mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -115,7 +146,11 @@ public class HistActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
 
             // Delete the existing data
-            new HistAsyncTask(mDB).execute();
+            new HistAsyncTask(mDB, null).execute(HistAsyncTask.DELETE);
+            new GMActiveAsyncTask(mDB, "").execute(GMActiveAsyncTask.DELETE_ALL);
+            new MemoAsyncTask(mDB, "").execute(MemoAsyncTask.DELETE);
+
+
             return true;
         }
 

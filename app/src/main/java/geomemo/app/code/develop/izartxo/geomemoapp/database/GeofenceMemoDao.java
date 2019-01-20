@@ -17,11 +17,14 @@ public interface GeofenceMemoDao {
     @Query("SELECT * FROM geofencememo")
     LiveData<List<GeofenceMemo>> getAll();
 
-    @Query("SELECT * FROM geofencememo")
+    @Query("SELECT * FROM geofencememo where active=1 order by creation_time DESC")
     Cursor getCursorAll();
 
     @Query("SELECT * FROM geofencememo WHERE geoName = :memoGeoName")
     List<GeofenceMemo> loadMemoGeofenceByName(String memoGeoName);
+
+    @Query("SELECT * FROM geofencememo WHERE geoName = :memoGeoName")
+    LiveData<List<GeofenceMemo>> getMemoGeofenceByName(String memoGeoName);
 
     @Insert
     void insertAll(GeofenceMemo... memos);

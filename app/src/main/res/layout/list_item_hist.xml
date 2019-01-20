@@ -8,35 +8,63 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="5dp">
+        android:padding="5dp"
+
+        >
 
         <TextView
             android:id="@+id/hist_geomemo_item_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:textColor="#FFFFFF"
             android:padding="1dp"
+
              />
+        <TextView
+        android:id="@+id/hist_geomemo_latlon_item_label_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#BDBDBD"
+        android:padding="1dp"
+        android:text="GeoPoint:"
+            />
 
         <TextView
         android:id="@+id/hist_geomemo_latlon_item_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+            android:textColor="#FFFFFF"
         android:padding="1dp"
         />
 
+        <TextView
+        android:id="@+id/hist_geomemo_creation_item_label_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#BDBDBD"
+        android:padding="1dp"
+            android:text="Created:"
+        />
         <TextView
         android:id="@+id/hist_geomemo_creation_item_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
         android:padding="1dp"
         />
-
+        <TextView
+        android:id="@+id/hist_geomemo_history_item_label_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#BDBDBD"
+        android:padding="1dp"
+        android:text="Historized:"
+        />
         <TextView
         android:id="@+id/hist_geomemo_history_item_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
         android:padding="1dp"
         />
 

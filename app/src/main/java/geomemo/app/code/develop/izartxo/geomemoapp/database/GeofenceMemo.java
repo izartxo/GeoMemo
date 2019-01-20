@@ -5,8 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity
+@Entity(tableName = GeofenceMemo.TABLE_GEOFENCEMEMO)
 public class GeofenceMemo{
+
+    public static final String TABLE_GEOFENCEMEMO = "geofencememo";
 
     @PrimaryKey
     @NonNull

@@ -3,4 +3,15 @@
     <string name="menu_main_add">Add GeoMemo</string>
     <string name="menu_main_show">Show GeoMemo</string>
     <string name="menu_main_history">History</string>
+
+
+    <!-- CONTENT DESCRIPTION -->
+    <string name="show_bin">delete geomemo</string>
+    <string name="title_activity_maps">Map</string>
+    <!-- END CONTENT DESCRIPTION-->
+
+    <!-- BEGIN WIDGET -->
+    <string name="widget_data_header">GeoMemos</string>
+    <string name="widget_data_nodata">No Data</string>
+    <!-- END WIDGET -->
 </resources>

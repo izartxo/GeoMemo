@@ -9,15 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/colorAccent"
+
         android:alpha="0.5"
         android:id="@+id/header_layout"
         >
+        <!--android:background="@color/colorAccent"-->
         <TextView android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="GEOMEMO"
+            android:textColor="#FFCCFF"
+
             />
     </LinearLayout>
 
@@ -45,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FF0000"
-            android:text="No data"
+            android:text="@string/widget_data_nodata"
             />
 
     </LinearLayout>

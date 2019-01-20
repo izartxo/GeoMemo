@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface GMActivesDao {
 
-    @Query("SELECT * FROM gmactives")
+    @Query("SELECT * FROM gmactives order by creation_time desc")
     LiveData<List<GMActives>> getAll();
 
     @Query("SELECT * FROM gmactives")

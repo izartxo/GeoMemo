@@ -6,14 +6,17 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.HashMap;
+
+import geomemo.app.code.develop.izartxo.geomemoapp.database.GeofenceMemo;
 
 public class WidgetIntentService extends IntentService {
 
 
     public WidgetIntentService() {
-        super("GeoMemoWidget");
+        super("GeoMemoAppWidget");
     }
 
 
@@ -52,48 +55,32 @@ public class WidgetIntentService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
 
-        String ing = "1";
-
-        GeoMemoWidgetProvider.setRecipeNum();
-
-        if (intent.hasExtra("ing"))
-            ing = intent.getStringExtra("ing");
-
-
-        String columns = "_id = ?";
-        String[] values = new String[]{ing};
-
-        Uri ingredientUri = RecipeProvider.Ingredients.INGREDIENTS;
-        Cursor cursor = getContentResolver().query(ingredientUri,
-                null,
-                columns,
-                values,
-                null);
-
-
-        Uri recipeUri = RecipeProvider.Recipes.RECIPES;
-        Cursor cursor2 = getContentResolver().query(recipeUri,
+        Uri geoMemoUri = GeoMemoProvider.BASE_CONTENT_URI;
+        Log.d("WIDGENT", "---> " + geoMemoUri);
+        Cursor cursor = getContentResolver().query(geoMemoUri,
                 null,
                 null,
                 null,
                 null);
+
 
 
         HashMap<String,String> hm = new HashMap<>();
 
 
-        cursor2.moveToFirst();
+        cursor.moveToFirst();
 
-        while (!cursor2.isAfterLast())
+        while (!cursor.isAfterLast())
         {
-            Recipe r = new Recipe(cursor2.getString(0), 0, cursor2.getString(1), cursor2.getString(2));
 
-            hm.put(r.getRecipeId(),r.getTitle());
 
-            cursor2.moveToNext();
+            hm.put("test 1","test 2");
+
+            cursor.moveToNext();
         }
 
 
-        GeoMemoWidgetProvider.updateWidget(cursor, getApplicationContext(), hm);
+        GeoMemoAppWidgetProvider.updateWidget(cursor, getApplicationContext(), hm);
     }
 }
+

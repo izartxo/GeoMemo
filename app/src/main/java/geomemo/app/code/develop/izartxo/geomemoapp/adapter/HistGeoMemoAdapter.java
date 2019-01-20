@@ -43,7 +43,7 @@ public class HistGeoMemoAdapter extends RecyclerView.Adapter<HistGeoMemoAdapter.
                 + geofenceMemo.getGeoTimestamp() + "//"
                 + geofenceMemo.getGeoHistoryTime());
 
-        holder.geoNameTextview.setText(geofenceMemo.getGeoName() + " : " + geofenceMemo.getGeoMemo());
+        holder.geoNameTextview.setText(geofenceMemo.getGeoName() + System.lineSeparator() + geofenceMemo.getGeoMemo());
         holder.geoLatLonTextview.setText(geofenceMemo.getGeoLatitude() + " // " + geofenceMemo.getGeoLongitude());
         holder.geoCreationTextview.setText(geofenceMemo.getGeoTimestamp());
         holder.geoHistoryTextview.setText(geofenceMemo.getGeoHistoryTime());

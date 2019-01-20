@@ -15,6 +15,7 @@ import geomemo.app.code.develop.izartxo.geomemoapp.R;
 
 public class GeoMemoWidgetService extends RemoteViewsService {
 
+    private final static int TEXT_SHOW_MAX = 50;
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -41,12 +42,12 @@ public class GeoMemoWidgetService extends RemoteViewsService {
         @Override
         public void onDataSetChanged() {
 
-
-            data = GeoMemoWidgetProvider.getData();
+            data = GeoMemoAppWidgetProvider.getData();
 
             if (data == null) {
                 return;
             }
+
 
         }
 
@@ -77,9 +78,15 @@ public class GeoMemoWidgetService extends RemoteViewsService {
 
                 for (int u = 0; u < data.getColumnCount(); u++) {
 
-                    String title = data.getString(data.getColumnIndex(IngredientColumns.INGREDIENT));
+                    String title = data.getString(data.getColumnIndex("geoname")); // + " - " + data.getString(data.getColumnIndex("active"));
+                    String memo = data.getString(data.getColumnIndex("geomemo")); // + " - " + data.getString(data.getColumnIndex("active"));
 
-                    views.setTextViewText(R.id.geomemo_widget_item, title.toUpperCase());
+                    views.setTextViewText(R.id.geomemo_widget_item_name, title.toUpperCase());
+
+                    if (memo.length() > TEXT_SHOW_MAX)
+                        memo = memo.substring(0,TEXT_SHOW_MAX) + "...";
+
+                    views.setTextViewText(R.id.geomemo_widget_item_memo, memo);
                 }
 
 
@@ -91,9 +98,10 @@ public class GeoMemoWidgetService extends RemoteViewsService {
 
                 final Intent fillInIntent = new Intent();
 
-                Uri recipeUri = RecipeProvider.Recipes.RECIPES;
-                fillInIntent.setData(recipeUri);
-                views.setOnClickFillInIntent(R.id.geomemo_widget_item, fillInIntent);
+                Uri geoMemoUri = GeoMemoProvider.BASE_CONTENT_URI;
+                fillInIntent.setData(geoMemoUri);
+                views.setOnClickFillInIntent(R.id.geomemo_widget_item_name, fillInIntent);
+
             } catch (IllegalStateException ie){
                 Log.d("Widget", "Error recreating widget");
             } catch (StaleDataException sde){

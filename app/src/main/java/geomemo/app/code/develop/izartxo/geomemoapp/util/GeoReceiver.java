@@ -77,13 +77,18 @@ public class GeoReceiver extends BroadcastReceiver {
 
             //notificationGeo2(triggeringGeofences.get(0).getRequestId());
 
-            GMFactory.sendNotification(context, geofenceName);
+            //20190103
+            //GMFactory.sendNotification(context, geofenceName);
+            GMFactory.sendMemo(context, geofenceName);
+
             // !!!!
             //noti3(geofenceName, "dummy");
 
             //new MyAsyncTask(triggeringGeofences.get(0).getRequestId());
 
-            GMFactory.readGeoMemo(mContext, geofenceName); // Updates geoMemos active state 1-->0
+            //GMFactory.readGeoMemo(mContext, geofenceName); // Updates geoMemos active state 1-->0
+
+            GMFactory.readMemo(mContext, geofenceName);
 
         } else {
             // Log the error.

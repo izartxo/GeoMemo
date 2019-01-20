@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout android:id="@+id/app_bar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:elevation="4dp"
+    android:fitsSystemWindows="true"
+    app:theme="@style/GeoMemoTheme"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/GeoMemoTheme"
+        android:backgroundTint="@color/GMcolorPrimary"/> <!-- #00AA0099 -->
+
+
+
+</android.support.design.widget.AppBarLayout>

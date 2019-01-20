@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <!--<color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FF4081</color>-->
+
+    <color name="GMcolorPrimary">#E91E63</color>
+    <color name="GMcolorPrimaryDark">#C2185B</color>
+    <color name="GMcolorAccent">#009688</color>
+    <color name="GMcolorPrimaryText">#212121</color>
+    <color name="GMcolorPrimaryLight"></color>
+    <color name="GMcolorSecondText">#757575</color>
+    <color name="GMcolorText">#FFFFFF</color>
+    <color name="GMcolorDivider">#BDBDBD</color>
 </resources>

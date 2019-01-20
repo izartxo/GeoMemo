@@ -9,25 +9,26 @@ import android.util.Log;
 import java.util.List;
 
 import geomemo.app.code.develop.izartxo.geomemoapp.database.AppDatabase;
-import geomemo.app.code.develop.izartxo.geomemoapp.database.GMActives;
+import geomemo.app.code.develop.izartxo.geomemoapp.database.GeofenceMemo;
 
 
-public class GMActivesViewModel extends AndroidViewModel {
-    private static final String LOG_TAG = "*******" + GMActivesViewModel.class.getSimpleName();
+public class GeofenceMemoViewModel extends AndroidViewModel {
+    private static final String LOG_TAG = "*******" + GeofenceMemoViewModel.class.getSimpleName();
 
-    LiveData<List<GMActives>> geoMemoActivesList;
+    LiveData<List<GeofenceMemo>> geoMemoActivesList;
 
 
-    public GMActivesViewModel(@NonNull Application application) {
+    public GeofenceMemoViewModel(@NonNull Application application) {
         super(application);
 
         AppDatabase mDB = AppDatabase.getInstance(this.getApplication());
         Log.d(LOG_TAG, "Retrieving data from database");
-        geoMemoActivesList = mDB.gmActivesDao().getAll();
+        geoMemoActivesList = mDB.geofenceMemoDao().getAll();
 
     }
 
-    public LiveData<List<GMActives>> getGeoMemoActivesList() {
+    public LiveData<List<GeofenceMemo>> getMemoGeofenceByName() {
         return geoMemoActivesList;
     }
 }
+

@@ -10,21 +10,47 @@
         android:gravity="center"
         android:padding="5dp">
 
-        <TextView
-            android:id="@+id/show_geomemo_item_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:padding="3dp"
-             />
+    <TextView
+        android:id="@+id/show_geomemo_item_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:padding="1dp"
 
-        <TextView
+        />
+    <TextView
+        android:id="@+id/show_geomemo_latlon_item_label_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#BDBDBD"
+        android:padding="1dp"
+        android:text="GeoPoint:"
+        />
+
+    <TextView
         android:id="@+id/show_geomemo_latlon_item_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:padding="3dp"
+        android:textColor="#FFFFFF"
+        android:padding="1dp"
         />
+
+    <TextView
+        android:id="@+id/show_geomemo_creation_item_label_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#BDBDBD"
+        android:padding="1dp"
+        android:text="Created:"
+        />
+    <TextView
+        android:id="@+id/show_geomemo_creation_item_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:padding="1dp"
+        />
+
 
         <ImageButton
         android:id="@+id/show_geomemo_item_imagebutton"
@@ -32,8 +58,13 @@
         android:layout_height="wrap_content"
             android:maxHeight="64dp"
             android:minHeight="64dp"
-        android:layout_gravity="end"
-            android:src="@mipmap/brain"
+            android:maxWidth="64dp"
+            android:minWidth="64dp"
+            android:adjustViewBounds= "true"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/show_bin"
+            android:layout_gravity="end"
+            android:src="@mipmap/bin"
         android:padding="3dp"
             />
 
