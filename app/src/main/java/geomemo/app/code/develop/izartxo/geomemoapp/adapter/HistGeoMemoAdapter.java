@@ -43,8 +43,11 @@ public class HistGeoMemoAdapter extends RecyclerView.Adapter<HistGeoMemoAdapter.
                 + geofenceMemo.getGeoTimestamp() + "//"
                 + geofenceMemo.getGeoHistoryTime());
 
-        holder.geoNameTextview.setText(geofenceMemo.getGeoName() + System.lineSeparator() + geofenceMemo.getGeoMemo());
-        holder.geoLatLonTextview.setText(geofenceMemo.getGeoLatitude() + " // " + geofenceMemo.getGeoLongitude());
+        holder.geoNameTextview.setText(geofenceMemo.getGeoName() + System.lineSeparator() + System.lineSeparator() + geofenceMemo.getGeoMemo());
+        String geoLatitude = geofenceMemo.getGeoLatitude();
+        String geoLongitude = geofenceMemo.getGeoLongitude();
+        holder.geoLatTextview.setText("Lat: " + geoLatitude); //.subSequence(0, geoLatitude.length() - (geoLatitude.length()<10?0:5)));
+        holder.geoLonTextview.setText("Lon: " + geoLongitude); //.subSequence(0, geoLongitude.length() - (geoLongitude.length()<10?0:5)));
         holder.geoCreationTextview.setText(geofenceMemo.getGeoTimestamp());
         holder.geoHistoryTextview.setText(geofenceMemo.getGeoHistoryTime());
     }
@@ -59,7 +62,8 @@ public class HistGeoMemoAdapter extends RecyclerView.Adapter<HistGeoMemoAdapter.
     class HistGeoMemoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         final TextView geoNameTextview;
-        final TextView geoLatLonTextview;
+        final TextView geoLatTextview;
+        final TextView geoLonTextview;
         final TextView geoCreationTextview;
         final TextView geoHistoryTextview;
 
@@ -68,7 +72,8 @@ public class HistGeoMemoAdapter extends RecyclerView.Adapter<HistGeoMemoAdapter.
             super(itemView);
 
             geoNameTextview = (TextView) itemView.findViewById(R.id.hist_geomemo_item_textview);
-            geoLatLonTextview = (TextView) itemView.findViewById(R.id.hist_geomemo_latlon_item_textview);
+            geoLatTextview= (TextView) itemView.findViewById(R.id.hist_geomemo_lat_item_textview);
+            geoLonTextview= (TextView) itemView.findViewById(R.id.hist_geomemo_lon_item_textview);
             geoCreationTextview = (TextView) itemView.findViewById(R.id.hist_geomemo_creation_item_textview);
             geoHistoryTextview = (TextView) itemView.findViewById(R.id.hist_geomemo_history_item_textview);
 

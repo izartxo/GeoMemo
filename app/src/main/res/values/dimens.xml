@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_distance">16dp</dimen>
+    <dimen name="logo_place_distance">72dp</dimen>
+    <dimen name="toolbar_horizontal_padding">4dp</dimen>
+    <dimen name="button_padding">8dp</dimen>
+
+</resources>

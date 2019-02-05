@@ -6,8 +6,10 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -28,7 +30,7 @@ import geomemo.app.code.develop.izartxo.geomemoapp.database.GMActives;
 import geomemo.app.code.develop.izartxo.geomemoapp.database.GeofenceMemo;
 import geomemo.app.code.develop.izartxo.geomemoapp.util.GMFactory;
 
-public class ShowActivity extends AppCompatActivity {
+public class ShowActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private static final String LOG_TAG = "*******" + ShowActivity.class.getSimpleName();
 
@@ -38,6 +40,9 @@ public class ShowActivity extends AppCompatActivity {
     private ShowGeoMemoAdapter mShowGeoMemoAdapter;
     private RecyclerView mRecyclerView;
     private ShowViewModel showViewModel;
+
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     /*@BindView(R.id.show_geomemo_textview)
     TextView tGeoMemoInfo;
@@ -57,11 +62,14 @@ public class ShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         mDB = AppDatabase.getInstance(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        toolbar.setTitle("Show Geomemos");
+        toolbar.setTitle(getResources().getString(R.string.toolbar_show_title));
 
         setSupportActionBar(toolbar);
 
@@ -91,7 +99,11 @@ public class ShowActivity extends AppCompatActivity {
 
         mShowGeoMemoAdapter = new ShowGeoMemoAdapter(this, onDeleteListener);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.line_divider));
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
+
         mRecyclerView.setAdapter(mShowGeoMemoAdapter);
     }
 
@@ -101,15 +113,18 @@ public class ShowActivity extends AppCompatActivity {
 
         showViewModel();
 
-        GMFactory.sendMemo(this, "J");
-        GMFactory.sendMemo(this, "Xxx");
-        GMFactory.sendMemo(this, "Turk8");
     }
 
     @Override
     protected void onDestroy(){
         Log.d(LOG_TAG, "ONDESTROY");
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        mRecyclerView.getAdapter().notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     public interface OnDeleteListener{

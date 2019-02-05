@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,6 +37,9 @@ import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -121,6 +125,7 @@ public class MenuMainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar.setTitle("GeoMemoApp");
+
 
         setSupportActionBar(toolbar);
 
@@ -234,6 +239,7 @@ public class MenuMainActivity extends AppCompatActivity {
             //sendBroadcast(i);
 
             showSnackBar(RESULT_OK);
+            GeoMemoAppWidgetProvider.updateMyWidgets(this);
 
         }catch(Exception e){
             Log.d(LOG_TAG, "ERROR geoMemo2Room: " + e.getMessage());
@@ -461,5 +467,7 @@ public class MenuMainActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 }

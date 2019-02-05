@@ -23,8 +23,16 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_collapseMode="pin"
-        app:popupTheme="@style/GeoMemoTheme"
-        android:backgroundTint="@color/GMcolorPrimary"/> <!-- #00AA0099 -->
+        android:theme="@style/MainActionBar.Popup"
+
+
+        app:contentInsetStart="@dimen/logo_place_distance"
+        android:paddingStart="@dimen/toolbar_horizontal_padding"
+
+        android:paddingEnd="@dimen/toolbar_horizontal_padding"
+        android:padding="@dimen/toolbar_horizontal_padding"
+        /> <!-- #00AA0099 -->
+
 
 
 

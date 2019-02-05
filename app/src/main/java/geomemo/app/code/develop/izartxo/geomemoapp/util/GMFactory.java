@@ -50,7 +50,7 @@ public class GMFactory {
 
     private static int GM_DEFAULT_SIZE = 1; // Short size
     private static boolean GM_DEFAULT_ACTIVE = true; // Not active on creation
-    private static int GM_TEXT_LENGTH = 150;
+    public static int GM_TEXT_LENGTH = 150;
     public static String GEOFENCE = "geomemo.app.code.develop.izartxo.geomemoapp.ui.GEOFENCE";
 
 
@@ -171,8 +171,8 @@ public class GMFactory {
 
         //String CHANNEL_ID = "my_channel_01";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            CharSequence name = "geomemo_channel"; //"my_channel";
-            String Description = "GeoMemo channel"; //"This is my channel";
+            CharSequence name = "geomemo_channel";
+            String Description = "GeoMemo channel";
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
             mChannel.setDescription(Description);
@@ -218,7 +218,9 @@ public class GMFactory {
                         //set this notification as the summary for the group
                         .setGroupSummary(true)
                         .setNumber(notificationManager.getActiveNotifications().length)
+                        .setAutoCancel(true)
                         .build();
+
 
         Intent resultIntent = new Intent(context, MenuMainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);

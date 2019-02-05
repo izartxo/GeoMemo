@@ -5,7 +5,44 @@
     android:layout_height="fill_parent"
     android:id="@+id/todayView">
 
-    <include layout="@layout/app_bar_layout"/>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:elevation="4dp"
+        android:fitsSystemWindows="true"
+        app:theme="@style/GeoMemoTheme"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+        <!-- <android.support.design.widget.CollapsingToolbarLayout
+         android:id="@+id/toolbar_container"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:fitsSystemWindows="true"
+         app:contentScrim="?attr/colorPrimary"
+         app:expandedTitleMarginStart="48dp"
+         app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed">-->
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/GeoMemoTheme"
+            android:backgroundTint="#00AA0099"
+            app:contentInsetStart="@dimen/margin_distance"
+            android:paddingStart="@dimen/toolbar_horizontal_padding"
+            android:paddingEnd="@dimen/toolbar_horizontal_padding">
+
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+
+        <!--      </android.support.design.widget.CollapsingToolbarLayout>-->
+    </android.support.design.widget.AppBarLayout>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"

@@ -25,6 +25,10 @@
         <item name="colorPrimary">@color/GMcolorPrimary</item>
         <item name="colorPrimaryDark">@color/GMcolorPrimaryDark</item>
         <item name="colorAccent">@color/GMcolorAccent</item>
+        <item name="android:textColorPrimary">@color/GMcolorText</item>
+        <item name="android:textColorSecondary">@color/GMcolorText</item>
+
+
         <!--<item name="colorText">@color/GMcolorText</item>
         <item name="colorTextSecondary">@color/GMcolorSecondText</item>-->
         <!--<item name="colorPrimaryText">@color/GMcolorPrimaryText</item>
@@ -32,6 +36,13 @@
         <item name="colorSecondaryText">@color/GMcolorSecondaryText</item>
         <item name="colorDivider">@color/GMcolorDivider</item>
         <item name="colorText">@color/GMcolorText</item>-->
+    </style>
+
+    <style name="MainActionBar.Popup" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/GMcolorPrimary</item>
+        <item name="android:textColorPrimary">@color/GMcolorText</item>
+        <item name="android:textColorSecondary">@color/GMcolorText</item>
+
     </style>
 
 

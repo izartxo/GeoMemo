@@ -111,4 +111,50 @@ public class LocationUtil {
         }
     }
 
+    public void superCheck(){
+
+        LocationManager lm = (LocationManager)mContext.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+
+        if(!gps_enabled && !network_enabled) {
+            // notify user
+            AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+            dialog.setMessage("not enabled gps");
+            dialog.setPositiveButton("open", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    // TODO Auto-generated method stub
+                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    mContext.startActivity(myIntent);
+                    //get gps
+                }
+            });
+            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
+            dialog.show();
+        }
+
+//        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+  //              locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+
+    }
+
+
+
 }

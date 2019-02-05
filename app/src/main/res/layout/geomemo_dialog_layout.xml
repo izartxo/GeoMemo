@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/dialog_geomemo_error_textview"
+        android:visibility="invisible"
+        android:textColor="@color/GMcolorPrimary"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/dialog_geomemo_id_textview"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/GMcolorSecondText"
+        android:contentDescription="@string/dialog_geomemoid_content_description"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/dialog_geomemo_memo_textview"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/GMcolorSecondText"
+        android:contentDescription="@string/dialog_geomemomemo_content_description"
+        />
+
+
+</LinearLayout>

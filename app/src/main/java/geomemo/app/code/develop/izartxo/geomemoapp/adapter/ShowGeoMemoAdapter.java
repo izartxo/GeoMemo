@@ -48,8 +48,11 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
     public void onBindViewHolder(@NonNull ShowGeoMemoViewHolder holder, final int position) {
         final GMActives geofenceMemo = mGeoMemoList.get(position);
 
-        holder.geoNameTextview.setText(geofenceMemo.getGeoName() + System.lineSeparator() + geofenceMemo.getGeoMemo());
-        holder.geoLatLonTextview.setText(geofenceMemo.getGeoLatitude() + " // " + geofenceMemo.getGeoLongitude());
+        holder.geoNameTextview.setText(geofenceMemo.getGeoName() + System.lineSeparator() + System.lineSeparator() + geofenceMemo.getGeoMemo());
+        String geoLatitude = geofenceMemo.getGeoLatitude();
+        String geoLongitude = geofenceMemo.getGeoLongitude();
+        holder.geoLatTextview.setText("Lat: " + geoLatitude); //.subSequence(0, geoLatitude.length() - (geoLatitude.length()<10?0:5)));
+        holder.geoLonTextview.setText("Lon: " + geoLongitude); //.subSequence(0, geoLongitude.length() - (geoLongitude.length()<10?0:5)));
         holder.geoCreatedTextview.setText(geofenceMemo.getGeoTimestamp());
         holder.bDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +78,8 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
     class ShowGeoMemoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         final TextView geoNameTextview;
-        final TextView geoLatLonTextview;
+        final TextView geoLatTextview;
+        final TextView geoLonTextview;
         final TextView geoCreatedTextview;
         final ImageButton bDelete;
 
@@ -92,7 +96,8 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
             super(itemView);
 
             geoNameTextview = (TextView) itemView.findViewById(R.id.show_geomemo_item_textview);
-            geoLatLonTextview= (TextView) itemView.findViewById(R.id.show_geomemo_latlon_item_textview);
+            geoLatTextview= (TextView) itemView.findViewById(R.id.show_geomemo_lat_item_textview);
+            geoLonTextview= (TextView) itemView.findViewById(R.id.show_geomemo_lon_item_textview);
             geoCreatedTextview= (TextView) itemView.findViewById(R.id.show_geomemo_creation_item_textview);
             //
             bDelete = (ImageButton) itemView.findViewById(R.id.show_geomemo_item_imagebutton);

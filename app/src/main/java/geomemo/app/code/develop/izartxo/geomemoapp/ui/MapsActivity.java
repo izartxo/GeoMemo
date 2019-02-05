@@ -1,10 +1,12 @@
 package geomemo.app.code.develop.izartxo.geomemoapp.ui;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.inputmethodservice.Keyboard;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -39,13 +42,14 @@ import geomemo.app.code.develop.izartxo.geomemoapp.util.LocationUtil;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String LOG_TAG = "*******" + MapsActivity.class.getSimpleName();
+    public static final int DIALOG_FRAGMENT = 0x1;
 
     private GoogleMap mMap;
 
     private static LocationUtil locationUtil;
     private LocationUtil.LocationReady mInterface;
     private FusedLocationProviderClient lClient;
-    LatLng galda;
+    private static LatLng galda;
 
 
     @Override
@@ -137,8 +141,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onMapClick(LatLng latLng) {
 
                 showDialog(latLng,false);
-
-
+                //galda = latLng;
+                //
+                // showDialogNew(false);
             }
 
         });
@@ -185,12 +190,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final EditText input = new EditText(MapsActivity.this);
         final EditText name = new EditText(MapsActivity.this);
         final TextView tname = new TextView(MapsActivity.this);
-        tname.setText("GeoMemoName:");
+        tname.setText(getResources().getString(R.string.dialog_geomemo_id_textview));
         final TextView tinput = new TextView(MapsActivity.this);
-        tinput.setText("Memo:");
+        tinput.setText(getResources().getString(R.string.dialog_geomemo_memo_textview));
 
         terror.setTextColor(getResources().getColor(R.color.GMcolorPrimaryDark));
-        terror.setText("Text not empty and 50 max char");
+        input.setTextColor(R.color.GMcolorSecondText);
+        name.setTextColor(R.color.GMcolorSecondText);
+
+        String errorMessage = String.format(getResources().getString(R.string.dialog_geomemo_length_error), GMFactory.GM_TEXT_LENGTH);
+        terror.setText(errorMessage);
         terror.setVisibility(View.INVISIBLE);
         if (witherror)
             terror.setVisibility(View.VISIBLE);
@@ -209,9 +218,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         layout.addView(tinput);
         layout.addView(input);
 
+        TextView customTitle = new TextView(this);
+        customTitle.setText("GeoMemo");
+        customTitle.setBackgroundColor(getColor(R.color.GMcolorAccent));
+        customTitle.setTextColor(getColor(R.color.GMcolorText));
 
         AlertDialog.Builder b=  new  AlertDialog.Builder(this)
-                .setTitle("Memo text")
+                .setCustomTitle(customTitle)
                 .setView(layout)
                 .setPositiveButton("Accept",
                         new DialogInterface.OnClickListener() {
@@ -242,4 +255,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    private void showDialogNew(boolean error){
+        GeoMemoDialog gd = new GeoMemoDialog();
+        gd.setTargetFragment(getFragmentManager().findFragmentById(R.id.map), DIALOG_FRAGMENT);
+        gd.show(getFragmentManager(), "geomemo dialog");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case DIALOG_FRAGMENT:
+
+                if (resultCode == Activity.RESULT_OK) {
+                    // After Ok code.
+
+                    String tname = data.getStringExtra("name");
+                    String ttext = data.getStringExtra("input");
+                    if (!(GMFactory.checkText(tname) && GMFactory.checkText(ttext))) {
+                        showDialogNew(true);
+                    }else{
+                        startGeo(tname, ttext, galda);
+                    }
+
+                } else if (resultCode == Activity.RESULT_CANCELED){
+                    // After Cancel code.
+                }
+
+                break;
+        }
+    }
+
+
+
 }
+

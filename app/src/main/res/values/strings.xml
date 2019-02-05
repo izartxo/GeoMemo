@@ -1,17 +1,40 @@
 <resources>
-    <string name="app_name">GeoMemoApp</string>
+    <string name="app_name">GeoMemo</string>
     <string name="menu_main_add">Add GeoMemo</string>
     <string name="menu_main_show">Show GeoMemo</string>
     <string name="menu_main_history">History</string>
 
+    <!-- BEGIN DIALOG -->
+    <string name="dialog_geomemo_title">Add GeoMemo</string>
+    <string name="dialog_geomemo_id_textview">GeoMemo ID:</string>
+    <string name="dialog_geomemo_memo_textview">GeoMemo Text:</string>
+    <string name="dialog_geomemo_error_textview">ERROR</string>
+    <string name="dialog_geomemo_accept_button">Accept</string>
+    <string name="dialog_geomemo_cancel_button">Cancel</string>
+    <string name="dialog_geomemo_length_error">"Text not empty and %1$d max char"</string>
+    <!-- END DIALOG -->
 
     <!-- CONTENT DESCRIPTION -->
-    <string name="show_bin">delete geomemo</string>
+    <string name="show_bin">Delete GeoMemo bin image</string>
     <string name="title_activity_maps">Map</string>
+    <string name="toolbar_logo_content_description">GeoMemo app logo. A pink brain with GeoMemo green word close to it</string>
+    <string name="dialog_geomemoid_content_description">GeoMemo identification editable field</string>
+    <string name="dialog_geomemomemo_content_description">GeoMemo memo text editable field</string>
     <!-- END CONTENT DESCRIPTION-->
 
     <!-- BEGIN WIDGET -->
     <string name="widget_data_header">GeoMemos</string>
     <string name="widget_data_nodata">No Data</string>
     <!-- END WIDGET -->
+
+    <!-- BEGIN TOOLBAR -->
+    <string name="toolbar_map_title">Map</string>
+    <string name="toolbar_show_title">Show GeoMemo</string>
+    <string name="toolbar_history_title">History</string>
+    <!-- END TOOLBAR -->
+
+    <!-- BEGIN MENU -->
+    <string name="menu_history_delete">Reset all data</string>
+    <string name="menu_history_delete_message">Cleared all data</string>
+    <!-- END MENU -->
 </resources>
