@@ -25,25 +25,21 @@ public class BroadcastService extends JobService {
             isRunning = true;
         }
 
-        Log.d(LOG_TAG, "onCreate............service actived: " + isRunning);
+        //Log.d(LOG_TAG, "onCreate............service actived: " + isRunning);
 
     }
 
-    /*@Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand............");
-        return super.onStartCommand(intent, flags, startId);
-    }*/
+
 
     @Override
     public void onDestroy() {
-        Log.d(LOG_TAG, "onCreate............service destroyed: " + isRunning);
+        //Log.d(LOG_TAG, "onCreate............service destroyed: " + isRunning);
         super.onDestroy();
     }
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
-        Log.d(LOG_TAG, "startjob............service actived: " + isRunning);
+        //Log.d(LOG_TAG, "startjob............service actived: " + isRunning);
         if (geoReceiver==null){
             IntentFilter intentFilter = new IntentFilter(GeoReceiver.GEOFENCE);
             geoReceiver = new GeoReceiver(getApplicationContext());
@@ -59,7 +55,7 @@ public class BroadcastService extends JobService {
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         isRunning = false;
-        Log.d(LOG_TAG, "stopjob............service actived: " + isRunning);
+        //Log.d(LOG_TAG, "stopjob............service actived: " + isRunning);
         if (geoReceiver!=null)
             unregisterReceiver(geoReceiver);
         return true;

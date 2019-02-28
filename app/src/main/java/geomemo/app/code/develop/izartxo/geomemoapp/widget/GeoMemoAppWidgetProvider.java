@@ -84,9 +84,7 @@ public class GeoMemoAppWidgetProvider extends AppWidgetProvider {
     public static void updateWidget(Cursor cursor, Context context, HashMap lhm){
         mData = cursor;
         hm = lhm;
-   //     Intent intent = new Intent(context, GeoMemoAppWidgetProvider.class);
-     //   intent.setAction(APP_UPD);
-       // context.sendBroadcast(intent);
+
         updateMyWidgets(context);
 
     }
@@ -95,11 +93,6 @@ public class GeoMemoAppWidgetProvider extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
 
-       /* final Intent fillInIntent = new Intent();
-        fillInIntent.setAction(APP_UPD);
-        Uri geoMemoUri = GeoMemoProvider.BASE_CONTENT_URI;
-        fillInIntent.setData(geoMemoUri);
-        context.sendBroadcast(fillInIntent);*/
     }
 
     public static void updateMyWidgets(Context context) {

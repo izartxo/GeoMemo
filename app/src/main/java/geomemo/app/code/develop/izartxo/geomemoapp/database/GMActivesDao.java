@@ -18,20 +18,14 @@ public interface GMActivesDao {
     @Query("SELECT * FROM gmactives order by creation_time desc")
     LiveData<List<GMActives>> getAll();
 
-    @Query("SELECT * FROM gmactives")
-    Cursor getCursorAll();
 
-    @Query("SELECT * FROM gmactives WHERE geoName = :geoName")
-    List<GMActives> loadGMActiveByName(String geoName);
 
-    @Insert
-    void insertAll(GMActives... gmActives);
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertGeoMemo(GMActives activeMemo);
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateGMActive(GMActives gmActives);
+
 
     @Query("DELETE FROM gmactives WHERE geoname=:geoName")
     void deleteGMActive(String geoName);

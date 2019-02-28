@@ -51,17 +51,16 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
         holder.geoNameTextview.setText(geofenceMemo.getGeoName() + System.lineSeparator() + System.lineSeparator() + geofenceMemo.getGeoMemo());
         String geoLatitude = geofenceMemo.getGeoLatitude();
         String geoLongitude = geofenceMemo.getGeoLongitude();
-        holder.geoLatTextview.setText("Lat: " + geoLatitude); //.subSequence(0, geoLatitude.length() - (geoLatitude.length()<10?0:5)));
-        holder.geoLonTextview.setText("Lon: " + geoLongitude); //.subSequence(0, geoLongitude.length() - (geoLongitude.length()<10?0:5)));
+        holder.geoLatTextview.setText("Lat: " + geoLatitude);
+        holder.geoLonTextview.setText("Lon: " + geoLongitude);
         holder.geoCreatedTextview.setText(geofenceMemo.getGeoTimestamp());
         holder.bDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(LOG_TAG, "---" + position);
+                //Log.d(LOG_TAG, "---" + position);
                 final String geoname = mGeoMemoList.get(position).getGeoName();
                 mGeoMemoList.remove(position);
-                //mOnDelete.OnDelete(geoname);
-                //GMFactory.readGeoMemo(mContext, geoname);
+
                 GMFactory.readMemo(mContext, geoname);
                 notifyDataSetChanged();
             }
@@ -83,14 +82,7 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
         final TextView geoCreatedTextview;
         final ImageButton bDelete;
 
-        // Button to delete active GeoMemo
-        //@BindView(R.id.show_geomemo_item_imagebutton)
-        //ImageButton bDelete;
-        //@OnClick(R.id.show_geomemo_item_imagebutton)
-        //public void deleteGeoMemo(){
-        //    mGeoMemoList.remove(getAdapterPosition());
-        //}
-        /////
+
 
         public ShowGeoMemoViewHolder(View itemView) {
             super(itemView);
@@ -108,7 +100,7 @@ public class ShowGeoMemoAdapter extends RecyclerView.Adapter<ShowGeoMemoAdapter.
 
         @Override
         public void onClick(View view) {
-            Log.d(LOG_TAG, "Item clicked " + getAdapterPosition());
+            //Log.d(LOG_TAG, "Item clicked " + getAdapterPosition());
         }
     }
 

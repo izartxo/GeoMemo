@@ -69,12 +69,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //What to do on back clicked
+
                 finish();
             }
         });
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -96,10 +96,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
+
                         if (location!=null) {
                             galda = new LatLng(location.getLatitude(), location.getLongitude());
-                            mMap.addMarker(new MarkerOptions().position(galda).title("Marker geo"));
+                            mMap.addMarker(new MarkerOptions().position(galda));
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(galda));
                         }
                     }
@@ -127,12 +127,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        //LatLng galda = new LatLng(43.2317358,-2.8460554);
-
 
         mMap.setMinZoomPreference(15.0f);
 
@@ -141,9 +135,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onMapClick(LatLng latLng) {
 
                 showDialog(latLng,false);
-                //galda = latLng;
-                //
-                // showDialogNew(false);
+
             }
 
         });
@@ -151,11 +143,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void startGeo(String geoname, String memo, LatLng latLng){
-        // Instantiates a new CircleOptions object and defines the center and radius
-
-/*
-        mCircles.add(circle);
-*/
 
             Log.d(LOG_TAG, "Location: " + latLng);
             String lat = String.valueOf(latLng.latitude);
@@ -180,10 +167,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final CircleOptions circleOptions = new CircleOptions()
                 .center(latLng)
                 .fillColor(Color.GREEN)
-                //.clickable(true)
+
                 .radius(100); // In meters
 
-        // Get back the mutable Circle
+
         Circle circle = mMap.addCircle(circleOptions);
 
         final TextView terror = new TextView(MapsActivity.this);
@@ -219,17 +206,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         layout.addView(input);
 
         TextView customTitle = new TextView(this);
-        customTitle.setText("GeoMemo");
+        customTitle.setText(getString(R.string.app_name));
         customTitle.setBackgroundColor(getColor(R.color.GMcolorAccent));
         customTitle.setTextColor(getColor(R.color.GMcolorText));
 
         AlertDialog.Builder b=  new  AlertDialog.Builder(this)
                 .setCustomTitle(customTitle)
                 .setView(layout)
-                .setPositiveButton("Accept",
+                .setPositiveButton(getString(R.string.dialog_permission_accpet),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                // do something...
+
                                 String tname = name.getText().toString();
                                 String ttext = input.getText().toString();
                                 if (!(GMFactory.checkText(tname) && GMFactory.checkText(ttext))) {
@@ -241,7 +228,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
                         }
                 )
-                .setNegativeButton("Cancel",
+                .setNegativeButton(getString(R.string.dialog_permission_cancel),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();

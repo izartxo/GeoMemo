@@ -42,7 +42,7 @@ public class MemoAsyncTask extends AsyncTask<Integer, Void, List<GeofenceMemo>> 
 
     @Override
     protected  List<GeofenceMemo> doInBackground(Integer... operation){
-        Log.d(LOG_TAG, "-------> DO IN BACKGROUND " + operation[0]);
+        //Log.d(LOG_TAG, "-------> DO IN BACKGROUND " + operation[0]);
         List<GeofenceMemo> object = null;
         switch(operation[0]){
             case INSERT:
@@ -59,13 +59,13 @@ public class MemoAsyncTask extends AsyncTask<Integer, Void, List<GeofenceMemo>> 
                 break;
         }
 
-        Log.d(LOG_TAG, "DIB FINISHED");
+        //Log.d(LOG_TAG, "DIB FINISHED");
 
         return object;
     }
 
     protected void  onPostExecute(List<GeofenceMemo> result) {
-        //GMFactory.setListGeo(result);
+
         try{
         if (result!=null)
             mloadMemo.loaded( result.get(0));

@@ -68,7 +68,7 @@ public class GMActiveAsyncTask extends AsyncTask<Integer, Void, List<GMActives>>
                 break;
         }
 
-        Log.d(LOG_TAG, "DIB FINISHED");
+       // Log.d(LOG_TAG, "DIB FINISHED");
 
         return object;
     }

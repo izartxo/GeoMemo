@@ -22,7 +22,7 @@ public class GMActivesViewModel extends AndroidViewModel {
         super(application);
 
         AppDatabase mDB = AppDatabase.getInstance(this.getApplication());
-        Log.d(LOG_TAG, "Retrieving data from database");
+        //Log.d(LOG_TAG, "Retrieving data from database");
         geoMemoActivesList = mDB.gmActivesDao().getAll();
 
     }

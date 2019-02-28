@@ -24,7 +24,7 @@ public class ShowViewModel extends AndroidViewModel {
         super(application);
 
         AppDatabase mDB = AppDatabase.getInstance(this.getApplication());
-        Log.d(LOG_TAG, "Retrieving data from database");
+        //Log.d(LOG_TAG, "Retrieving data from database");
         geoMemoList = mDB.gmActivesDao().getAll();
     }
 

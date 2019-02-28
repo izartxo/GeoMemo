@@ -39,15 +39,17 @@ public class HistGeoMemoAdapter extends RecyclerView.Adapter<HistGeoMemoAdapter.
     public void onBindViewHolder(@NonNull HistGeoMemoAdapter.HistGeoMemoViewHolder holder, int position) {
         GMHistory geofenceMemo = mGeoMemoList.get(position);
 
+/*
         Log.d(LOG_TAG, "GMH: " + geofenceMemo.getGeoMemo() + "//" + geofenceMemo.getGeoLatitude() + "//"
                 + geofenceMemo.getGeoTimestamp() + "//"
                 + geofenceMemo.getGeoHistoryTime());
+*/
 
         holder.geoNameTextview.setText(geofenceMemo.getGeoName() + System.lineSeparator() + System.lineSeparator() + geofenceMemo.getGeoMemo());
         String geoLatitude = geofenceMemo.getGeoLatitude();
         String geoLongitude = geofenceMemo.getGeoLongitude();
-        holder.geoLatTextview.setText("Lat: " + geoLatitude); //.subSequence(0, geoLatitude.length() - (geoLatitude.length()<10?0:5)));
-        holder.geoLonTextview.setText("Lon: " + geoLongitude); //.subSequence(0, geoLongitude.length() - (geoLongitude.length()<10?0:5)));
+        holder.geoLatTextview.setText("Lat: " + geoLatitude);
+        holder.geoLonTextview.setText("Lon: " + geoLongitude);
         holder.geoCreationTextview.setText(geofenceMemo.getGeoTimestamp());
         holder.geoHistoryTextview.setText(geofenceMemo.getGeoHistoryTime());
     }
@@ -82,7 +84,7 @@ public class HistGeoMemoAdapter extends RecyclerView.Adapter<HistGeoMemoAdapter.
 
         @Override
         public void onClick(View view) {
-            Log.d(LOG_TAG, "Item clicked " + getAdapterPosition());
+            //Log.d(LOG_TAG, "Item clicked " + getAdapterPosition());
         }
     }
 

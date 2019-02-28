@@ -89,11 +89,12 @@ public class MenuMainActivity extends AppCompatActivity {
     private PendingIntent mGeofencePendingIntent;
 
 
+
     @BindView(R.id.add_geomemo_button)
     Button bAdd;
     @OnClick(R.id.add_geomemo_button)
     public void addGeoMemo(View view){
-        Log.d(LOG_TAG, "add geomemo map button");
+        //Log.d(LOG_TAG, "add geomemo map button");
         view.setEnabled(false);
         startActivityGeoMemo(MapsActivity.class, MAP_ACTIVITY_CODE);
     }
@@ -102,7 +103,7 @@ public class MenuMainActivity extends AppCompatActivity {
     Button bShow;
     @OnClick(R.id.show_geomemo_button)
     public void showGeoMemo(View view){
-        Log.d(LOG_TAG, "show geomemo button");
+        //Log.d(LOG_TAG, "show geomemo button");
         view.setEnabled(false);
         startActivityGeoMemo(ShowActivity.class, SHOW_ACTIVITY_CODE);
     }
@@ -111,7 +112,7 @@ public class MenuMainActivity extends AppCompatActivity {
     Button bHist;
     @OnClick(R.id.history_geomemo_button)
     public void historyGeoMemo(View view){
-        Log.d(LOG_TAG,"hist geomemo button");
+        //Log.d(LOG_TAG,"hist geomemo button");
         view.setEnabled(false);
         startActivityGeoMemo(HistActivity.class, HIST_ACTIVITY_CODE);
     }
@@ -119,13 +120,12 @@ public class MenuMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(LOG_TAG, "ONCREATE");
+        //Log.d(LOG_TAG, "ONCREATE");
         setContentView(R.layout.activity_main_menu);
 
         mDB = AppDatabase.getInstance(getApplicationContext());
 
-        //mDB.gmActivesDao().deleteAll();
-        //mDB.geofenceMemoDao().deleteAll();
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -137,18 +137,11 @@ public class MenuMainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // !!!! Tranpa dago eginda hemen birpasatu
-        /*if (false && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)) {
-            startForegroundService(new Intent(this,BroadcastService.class));
-        }
-        else {
-            startGeoMemoService();
-        }*/
+
 
         startGeoMemoService();
         configureViewModel();
 
-       // activateSettings();
 
     }
 
@@ -161,16 +154,16 @@ public class MenuMainActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        Log.d(LOG_TAG, "ONPAUSE");
+        //Log.d(LOG_TAG, "ONPAUSE");
 
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d(LOG_TAG, "ONRESUME");
+        //Log.d(LOG_TAG, "ONRESUME");
         enableButtons();
-        //checkPermissions();
+
         statusCheck();
 
     }
@@ -185,7 +178,7 @@ public class MenuMainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(LOG_TAG, "OnActivityResult: " + requestCode + " - " + resultCode);
+        //Log.d(LOG_TAG, "OnActivityResult: " + requestCode + " - " + resultCode);
 
         switch(requestCode){
             case MAP_ACTIVITY_CODE:
@@ -206,29 +199,26 @@ public class MenuMainActivity extends AppCompatActivity {
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case PERMISSION: {
-                // If request is cancelled, the result arrays are empty.
+
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    Log.d(LOG_TAG, "Permission granted");
+
+                    //Log.d(LOG_TAG, "Permission granted");
 
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Log.d(LOG_TAG, "Permission denied");
+
+                    //Log.d(LOG_TAG, "Permission denied");
                 }
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request.
+
         }
     }
 
     // ROOM operations on back from activities
     private void geoMemo2Room(Intent data){
-        Log.d(LOG_TAG, "Geomemo2Room");
+        //Log.d(LOG_TAG, "Geomemo2Room");
         try{
             GeofenceMemo geofenceMemo = GMFactory.createGeoMemo(data.getStringExtra("geoname"),
                                                                 data.getStringExtra("geomemo"),
@@ -236,21 +226,17 @@ public class MenuMainActivity extends AppCompatActivity {
                                                                 data.getStringExtra("longitude"));
 
             // Insert new GeoMemo
-            //mDB.geofenceMemoDao().insertGeoMemo(geofenceMemo);
+
             new MemoAsyncTask(mDB, geofenceMemo).execute(MemoAsyncTask.INSERT);
             // Insert new GeoMemo on GMActives because of is active
             new GMActiveAsyncTask(mDB, GMFactory.createGMActive(geofenceMemo)).execute(GMActiveAsyncTask.INSERT);
-            //mDB.gmActivesDao().insertGeoMemo(GMFactory.createGMActive(geofenceMemo));
 
-            // Intent que no afecta al widget...
-            //Intent i = new Intent(GeoMemoAppWidgetProvider.APP_UPD);
-            //sendBroadcast(i);
 
             showSnackBar(RESULT_OK);
             GeoMemoAppWidgetProvider.updateMyWidgets(this);
 
         }catch(Exception e){
-            Log.d(LOG_TAG, "ERROR geoMemo2Room: " + e.getMessage());
+            //Log.d(LOG_TAG, "ERROR geoMemo2Room: " + e.getMessage());
             showSnackBar(RESULT_FAILED);
         }
     }
@@ -258,36 +244,36 @@ public class MenuMainActivity extends AppCompatActivity {
 
     private void showSnackBar(int result){
 
-        Log.d(LOG_TAG, "SNACKBAR: " + result);
+        //Log.d(LOG_TAG, "SNACKBAR: " + result);
         String message = "";
 
         switch (result){
             case RESULT_CANCELED:
-                message = "Nothing...";
+                message = getString(R.string.snackbar_messge_nothing);
                 break;
             case RESULT_OK:
-                message = "Data store OK";
+                message = getString(R.string.snackbar_messge_ok);
                 break;
             case RESULT_FAILED:
-                message = "Data store fails";
+                message = getString(R.string.snackbar_messge_notok);
         }
         final Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), message, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 
-    // Begiratu ez dakit ondo dabilen bi baimenak esaktzean bat jarrita aurrera doa...
+
     private void checkPermissions(){
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
-            Log.d(LOG_TAG, "CHECK PERMISSION - REQUEST ON COURSE");
+            //Log.d(LOG_TAG, "CHECK PERMISSION - REQUEST ON COURSE");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     PERMISSION);
 
         }
         else{
-            Log.d(LOG_TAG, "CHECK PERMISSION - OK");
+            ; //Log.d(LOG_TAG, "CHECK PERMISSION - OK");
 
         }
     }
@@ -298,9 +284,9 @@ public class MenuMainActivity extends AppCompatActivity {
         gmActivesViewModel.getGeoMemoActivesList().observe(this, new Observer<List<GMActives>>() {
             @Override
             public void onChanged(@Nullable List<GMActives> activesGeoMemos) {
-                Log.d(LOG_TAG, "Updating Database changes activesGeoMemos....." + activesGeoMemos.size());
+                //Log.d(LOG_TAG, "Updating Database changes activesGeoMemos....." + activesGeoMemos.size());
                 registerAllActives(activesGeoMemos);
-                showLogGeoMemos(activesGeoMemos);
+
             }
         });
     }
@@ -315,8 +301,7 @@ public class MenuMainActivity extends AppCompatActivity {
 
         for (GMActives gmActives : actives){
             mGeofenceList.add(new Geofence.Builder()
-                    // Set the request ID of the geofence. This is a string to identify this
-                    // geofence.
+
                     .setRequestId(gmActives.getGeoName())
 
                     .setCircularRegion(
@@ -333,24 +318,22 @@ public class MenuMainActivity extends AppCompatActivity {
 
         }
 
-        Log.d(LOG_TAG, "############################### " + mGeofenceList.size());
+        //Log.d(LOG_TAG, "############################### " + mGeofenceList.size());
 
         mGeofencingClient.addGeofences(getGeofencingRequest(mGeofenceList), getGeofencePendingIntent())
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Geofences added
-                        // ...
-                        Log.d(LOG_TAG, "Geofences added successfully");
+
+          //              Log.d(LOG_TAG, "Geofences added successfully");
 
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Failed to add geofences
-                       // ...
-                        Log.d(LOG_TAG, "ERROR: " + e.getMessage().toString());
+
+            //            Log.d(LOG_TAG, "ERROR: " + e.getMessage().toString());
                     }
                 });
 
@@ -366,32 +349,26 @@ public class MenuMainActivity extends AppCompatActivity {
     }
 
     private PendingIntent getGeofencePendingIntent() {
-        // Reuse the PendingIntent if we already have it.
+
         if (mGeofencePendingIntent != null) {
             return mGeofencePendingIntent;
         }
 
-        //Intent intent = new Intent(this,GeofenceTransitionsIntentService.class);
 
-        //
         Intent intent = new Intent(GeoReceiver.GEOFENCE);
 
-        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when
-        // calling addGeofences() and removeGeofences().
-        /*mGeofencePendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.
-                FLAG_UPDATE_CURRENT);
-        */
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //return mGeofencePendingIntent;
+
         return pendingIntent;
     }
 
     private void startGeoMemoService(){
-        Log.d(LOG_TAG, "START GEOMEMO SERVICE");
+        //Log.d(LOG_TAG, "START GEOMEMO SERVICE");
         ComponentName myService = new ComponentName(this, BroadcastService.class);
         JobInfo myJob = new JobInfo.Builder(BroadcastService.BROADCAST_RECEIVER_ID, myService)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                //.setMinimumLatency(10 * 1000) // 10 sg
+
                 .build();
 
 
@@ -400,28 +377,20 @@ public class MenuMainActivity extends AppCompatActivity {
 
     }
 
-    //For log only
-    private void showLogGeoMemos(List<GMActives> testList){
-        for (GMActives gm : testList){
-            Log.d(LOG_TAG, "GEOMEMO ACTIVE: " + gm.getGeoName());
-        }
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R., menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == android.R.id.home) {
             Toast.makeText(MenuMainActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
             return true;
@@ -430,51 +399,7 @@ public class MenuMainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void activateSettings(){
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
 
-        SettingsClient client = LocationServices.getSettingsClient(this);
-        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
-
-        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
-            @Override
-            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                // All location settings are satisfied. The client can initialize
-                // location requests here.
-                // ...
-                try {
-                    // Show the dialog by calling startResolutionForResult(),
-                    // and check the result in onActivityResult().
-                    ResolvableApiException resolvable = new ResolvableApiException(Status.RESULT_SUCCESS); //(ResolvableApiException) e;
-                    resolvable.startResolutionForResult(MenuMainActivity.this,
-                            REQUEST_CHECK_SETTINGS);
-                } catch (IntentSender.SendIntentException sendEx) {
-                    // Ignore the error.
-                }
-                //return;
-            }
-        });
-
-        task.addOnFailureListener(this, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                if (e instanceof ResolvableApiException) {
-                    // Location settings are not satisfied, but this can be fixed
-                    // by showing the user a dialog.
-                    try {
-                        // Show the dialog by calling startResolutionForResult(),
-                        // and check the result in onActivityResult().
-                        ResolvableApiException resolvable = (ResolvableApiException) e;
-                        resolvable.startResolutionForResult(MenuMainActivity.this,
-                                REQUEST_CHECK_SETTINGS);
-                    } catch (IntentSender.SendIntentException sendEx) {
-                        // Ignore the error.
-                    }
-                }
-            }
-        });
-
-    }
 
     public void statusCheck(){
         final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

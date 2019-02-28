@@ -18,9 +18,7 @@ import geomemo.app.code.develop.izartxo.geomemoapp.util.GMFactory;
 
 public class GeoMemoDialog extends DialogFragment {
 
-    Context mContext;
-    LatLng mLatLng;
-    boolean mError;
+
 
 
     @Override
@@ -29,11 +27,10 @@ public class GeoMemoDialog extends DialogFragment {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
+
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
+
         builder.setView(inflater.inflate(R.layout.geomemo_dialog_layout, null))
                 // Add action buttons
                 .setPositiveButton(R.string.dialog_geomemo_accept_button, new DialogInterface.OnClickListener() {

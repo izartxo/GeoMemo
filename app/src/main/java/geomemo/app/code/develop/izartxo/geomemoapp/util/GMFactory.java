@@ -132,21 +132,15 @@ public class GMFactory {
         removeGeoMemo(context, mGeoMemo);
 
         // state activate --> deactivate
-        //mDB.geofenceMemoDao().updateGeoMemoState(geoMemo);
+
         new MemoAsyncTask(mDB, geoMemo).execute(MemoAsyncTask.UPDATE);
         // delete from activates
-        //mDB.gmActivesDao().deleteGMActive(geoMemo);
+
         new GMActiveAsyncTask(mDB, geoMemo).execute(GMActiveAsyncTask.DELETE);
-        // Pass to history -- Berriro jarri behar dut
+        // Pass to history
         new MemoAsyncTask(mDB, geoMemo).execute(MemoAsyncTask.QUERY); //mDB.geofenceMemoDao().loadMemoGeofenceByName(geoMemo).get(0);
-        //List<GeofenceMemo> gl =  (List<GeofenceMemo>) o;
-
-        //MemoAsyncTask ma = new MemoAsyncTask(mDB, geoMemo);//.execute(MemoAsyncTask.QUERY); //mDB.geofenceMemoDao().loadMemoGeofenceByName(geoMemo).get(0);
-        //List<GeofenceMemo> geofenceMemo =  ma.execute(MemoAsyncTask.QUERY);
 
 
-
-        //mDB.gmHistoryDao().insertGMHistory(GMFactory.createGMHistory(geofenceMemo));
         new HistAsyncTask(mDB, GMFactory.createGMHistory(mDB.geofenceMemoDao().loadMemoGeofenceByName(geoMemo).get(0))).execute(HistAsyncTask.INSERT);
 
     }
@@ -155,10 +149,10 @@ public class GMFactory {
 
         AppDatabase mDB = AppDatabase.getInstance(context);
 
-        //new MemoAsyncTask(mDB, geoName).execute(MemoAsyncTask.QUERY); //mDB.geofenceMemoDao().loadMemoGeofenceByName(geoName);
+
 
         if (lGeoMemo==null){
-            Log.d(LOG_TAG,"NULL Notification!!!!!!");
+            //Log.d(LOG_TAG,"NULL Notification!!!!!!");
             return;
         }
 
@@ -167,9 +161,8 @@ public class GMFactory {
         String GROUP_KEY_WORK_EMAIL = "com.android.example.WORK_EMAIL";
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        // NotificationManagerCompat notificationManager2 = NotificationManagerCompat.from(mContext);
 
-        //String CHANNEL_ID = "my_channel_01";
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             CharSequence name = "geomemo_channel";
             String Description = "GeoMemo channel";
@@ -178,8 +171,7 @@ public class GMFactory {
             mChannel.setDescription(Description);
             mChannel.enableLights(true);
             mChannel.setLightColor(Color.MAGENTA);
-            //mChannel.enableVibration(true);
-            //mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+
             mChannel.setShowBadge(false);
             notificationManager.createNotificationChannel(mChannel);
         }
@@ -195,27 +187,16 @@ public class GMFactory {
                 .bigText(lGeoMemo.get(0).getGeoMemo()))
                 .setGroup(GROUP_KEY_WORK_EMAIL);
 
-       /* NotificationCompat.Builder builder2 = new NotificationCompat.Builder(mContext, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(n2)
-                .setContentText("message")
-                .setGroup(GROUP_KEY_WORK_EMAIL);*/
+
 
         Notification summaryNotification =
                 new NotificationCompat.Builder(context, CHANNEL_ID)
                         .setContentTitle("GeoMemos")
-                        //set content text to support devices running API level < 24
-                        //.setContentText("Two new messages")
+
                         .setSmallIcon(R.mipmap.brain)
-                        //build summary info into InboxStyle template
-                        //.setStyle(new NotificationCompat.InboxStyle()
-                         //       .addLine("Alex Faarborg  Check this out")
-                           //     .addLine("Jeff Chang    Launch Party")
-                             //   .setBigContentTitle("2 new messages")
-                               // .setSummaryText("janedoe@example.com"))
-                        //specify which group this notification belongs to
+
                         .setGroup(GROUP_KEY_WORK_EMAIL)
-                        //set this notification as the summary for the group
+
                         .setGroupSummary(true)
                         .setNumber(notificationManager.getActiveNotifications().length)
                         .setAutoCancel(true)
@@ -227,15 +208,14 @@ public class GMFactory {
         stackBuilder.addParentStack(MenuMainActivity.class);
         stackBuilder.addNextIntent(resultIntent);
 
-        // Aldaketa notifikazioak desagertzeko aplikaziora joan gabe.
-        //PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(context, 0, new Intent(), 0);
         builder.setContentIntent(resultPendingIntent);
 
         builder.setAutoCancel(true);
 
-        Log.d(LOG_TAG, "sssssssssssssssss: " + n1 + "//" + n2);
+        //Log.d(LOG_TAG, "sssssssssssssssss: " + n1 + "//" + n2);
 
         notificationManager.notify(Integer.valueOf(geoName.length()), builder.build());
 
@@ -256,13 +236,13 @@ public class GMFactory {
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Log.d(LOG_TAG, "--removed--> " + geoMemoName.get(0));
+                    //Log.d(LOG_TAG, "--removed--> " + geoMemoName.get(0));
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d(LOG_TAG, "--error removing--> " + geoMemoName.get(0));
+                    //Log.d(LOG_TAG, "--error removing--> " + geoMemoName.get(0));
                 }
             });
 
@@ -302,27 +282,18 @@ public class GMFactory {
     public static void readGeoMemo2(Context context, GeofenceMemo geoMemo){
         AppDatabase mDB = AppDatabase.getInstance(context);
 
-        // unregistering geofence
+
         ArrayList<String> mGeoMemo = new ArrayList<String>();
         mGeoMemo.add(geoMemo.getGeoName());
         removeGeoMemo(context, mGeoMemo);
 
         // state activate --> deactivate
-        //mDB.geofenceMemoDao().updateGeoMemoState(geoMemo);
+
         new MemoAsyncTask(mDB, geoMemo.getGeoName()).execute(MemoAsyncTask.UPDATE);
         // delete from activates
-        //mDB.gmActivesDao().deleteGMActive(geoMemo);
+
         new GMActiveAsyncTask(mDB, geoMemo.getGeoName()).execute(GMActiveAsyncTask.DELETE);
-        // Pass to history -- Berriro jarri behar dut
-        //new MemoAsyncTask(mDB, geoMemo).execute(MemoAsyncTask.QUERY); //mDB.geofenceMemoDao().loadMemoGeofenceByName(geoMemo).get(0);
-        //List<GeofenceMemo> gl =  (List<GeofenceMemo>) o;
 
-        //MemoAsyncTask ma = new MemoAsyncTask(mDB, geoMemo);//.execute(MemoAsyncTask.QUERY); //mDB.geofenceMemoDao().loadMemoGeofenceByName(geoMemo).get(0);
-        //List<GeofenceMemo> geofenceMemo =  ma.execute(MemoAsyncTask.QUERY);
-
-
-
-        //mDB.gmHistoryDao().insertGMHistory(GMFactory.createGMHistory(geofenceMemo));
         new HistAsyncTask(mDB, GMFactory.createGMHistory(geoMemo)).execute(HistAsyncTask.INSERT);
 
 

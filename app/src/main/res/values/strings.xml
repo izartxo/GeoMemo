@@ -42,5 +42,13 @@
     <string name="dialog_permission_title">GPS/WIFI not enabled</string>
     <string name="dialog_permission_settings">Settings</string>
     <string name="dialog_permission_cancel">Cancel</string>
+    <string name="dialog_permission_accpet">Accept</string>
     <!-- END DIALOG PERMISSION -->
+
+
+    <!-- BEGIN SNACKBAR MESSAGE -->
+    <string name="snackbar_messge_nothing">Nothing...</string>
+    <string name="snackbar_messge_ok">Data Store OK</string>
+    <string name="snackbar_messge_notok">Data Store fails</string>
+    <!-- END SNACKBAR MESSAGE -->
 </resources>

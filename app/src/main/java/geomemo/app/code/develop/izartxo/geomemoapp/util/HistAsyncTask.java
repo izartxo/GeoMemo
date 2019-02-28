@@ -29,7 +29,7 @@ public class HistAsyncTask extends AsyncTask<Integer, Void, List<GMHistory>> {
 
     @Override
     protected List<GMHistory> doInBackground(Integer... operation){
-        Log.d(LOG_TAG, "-------> DO IN BACKGROUND " + operation);
+        //Log.d(LOG_TAG, "-------> DO IN BACKGROUND " + operation);
         List<GMHistory> object = null;
         switch(operation[0]){
             case INSERT:
@@ -46,7 +46,7 @@ public class HistAsyncTask extends AsyncTask<Integer, Void, List<GMHistory>> {
                 break;
         }
 
-        Log.d(LOG_TAG, "DIB FINISHED");
+        //Log.d(LOG_TAG, "DIB FINISHED");
 
         return object;
     }

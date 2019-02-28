@@ -22,13 +22,11 @@ public class GeofenceMemoViewModel extends AndroidViewModel {
         super(application);
 
         AppDatabase mDB = AppDatabase.getInstance(this.getApplication());
-        Log.d(LOG_TAG, "Retrieving data from database");
+        //Log.d(LOG_TAG, "Retrieving data from database");
         geoMemoActivesList = mDB.geofenceMemoDao().getAll();
 
     }
 
-    public LiveData<List<GeofenceMemo>> getMemoGeofenceByName() {
-        return geoMemoActivesList;
-    }
+
 }
 

@@ -26,14 +26,12 @@ public interface GeofenceMemoDao {
     @Query("SELECT * FROM geofencememo WHERE geoName = :memoGeoName")
     LiveData<List<GeofenceMemo>> getMemoGeofenceByName(String memoGeoName);
 
-    @Insert
-    void insertAll(GeofenceMemo... memos);
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertGeoMemo(GeofenceMemo memo);
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateGeoMemo(GeofenceMemo memo);
+
 
     @Query("UPDATE geofencememo SET active=0 WHERE geoname=:geoName")
     void updateGeoMemoState(String geoName);

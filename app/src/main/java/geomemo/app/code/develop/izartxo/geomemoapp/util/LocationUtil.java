@@ -29,19 +29,19 @@ public class LocationUtil {
         this.mContext = mContext;
         this.mInterface = mInterface;
         configure();
-        Log.d(LOG_TAG, "CREATED AND LISTENING");
+        //Log.d(LOG_TAG, "CREATED AND LISTENING");
     }
 
 
     private void configure() {
 
-        // Acquire a reference to the system Location Manager
+
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
-        // Define a listener that responds to location updates
+
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
+
                 lastLocation = location;
                 mInterface.onLocationReady(location);
             }
@@ -56,7 +56,7 @@ public class LocationUtil {
             }
         };
 
-        // Register the listener with the Location Manager to receive location updates
+
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
 
@@ -71,89 +71,7 @@ public class LocationUtil {
         void onLocationReady(Location location);
     }
 
-    public void requestLocationServices(){
-        LocationManager lm = (LocationManager)mContext.getSystemService(Context.LOCATION_SERVICE);
-        boolean gps_enabled = false;
-        boolean network_enabled = false;
 
-        try {
-            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch(Exception ex) {}
-
-        try {
-            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch(Exception ex) {}
-
-        if(!gps_enabled && !network_enabled) {
-
-            // notify user
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-
-            dialog.setMessage("Activar location"); //mContext.getResources().getString(R.string.gps_network_not_enabled));
-            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() { //mContext.getResources().getString(R.string.open_location_settings),
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    // TODO Auto-generated method stub
-                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    mContext.startActivity(myIntent);
-                    //get gps
-                }
-            });
-            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { //mContext.getString(R.string.Cancel),
-
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
-            dialog.show();
-        }
-    }
-
-    public void superCheck(){
-
-        LocationManager lm = (LocationManager)mContext.getSystemService(Context.LOCATION_SERVICE);
-        boolean gps_enabled = false;
-        boolean network_enabled = false;
-
-        try {
-            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch(Exception ex) {}
-
-        try {
-            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch(Exception ex) {}
-
-        if(!gps_enabled && !network_enabled) {
-            // notify user
-            AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-            dialog.setMessage("not enabled gps");
-            dialog.setPositiveButton("open", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    // TODO Auto-generated method stub
-                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    mContext.startActivity(myIntent);
-                    //get gps
-                }
-            });
-            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
-            dialog.show();
-        }
-
-//        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
-  //              locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-
-    }
 
 
 

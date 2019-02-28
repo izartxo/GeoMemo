@@ -17,21 +17,13 @@ public interface GMHistoryDao {
     @Query("SELECT * FROM gmhistory order by history_time desc")
     LiveData<List<GMHistory>> getAll();
 
-    @Query("SELECT * FROM gmhistory")
-    Cursor getCursorAll();
 
-    @Query("SELECT * FROM gmhistory WHERE geoName = :geoName")
-    List<GMHistory> loadGMHistoryByName(String geoName);
-
-    @Insert
-    void insertAll(GMHistory... gmHistory);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertGMHistory(GMHistory memo);
 
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateGMHistory(GMHistory gmHistory);
+
 
     @Delete
     void delete(GMHistory gmHistory);

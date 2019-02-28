@@ -50,7 +50,7 @@ public class HistActivity extends AppCompatActivity implements SwipeRefreshLayou
     private static final String LOG_TAG = "*******" + HistActivity.class.getSimpleName();
 
     private AppDatabase mDB;
-    private LiveData<List<GMHistory>> geoMemoList;
+
 
     private HistGeoMemoAdapter mHistGeoMemoAdapter;
     private RecyclerView mRecyclerView;
@@ -91,12 +91,11 @@ public class HistActivity extends AppCompatActivity implements SwipeRefreshLayou
         histViewModel.getGeoMemoList().observe(this, new Observer<List<GMHistory>>() {
             @Override
             public void onChanged(@Nullable List<GMHistory> geofenceMemos) {
-                Log.d(LOG_TAG, "Updating Database changes geomemos.....");
+                //Log.d(LOG_TAG, "Updating Database changes geomemos.....");
                 mHistGeoMemoAdapter.setGeoMemoData(geofenceMemos);
                 mHistGeoMemoAdapter.notifyDataSetChanged();
 
-                /*for (GeofenceMemo gm : geofenceMemos)
-                    tGeoMemoInfo.setText(tGeoMemoInfo.getText() + "\r\n" + gm.getGeoName() + " - " + gm.getGeoMemo());*/
+
             }
         });
 
@@ -109,34 +108,15 @@ public class HistActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         mHistGeoMemoAdapter = new HistGeoMemoAdapter(this);
 
-        /*RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                super.onDraw(c, parent, state);
-            }
-        };
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));*/
-
-
 
         mRecyclerView.setAdapter(mHistGeoMemoAdapter);
-        /*mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
-                Paint p = new Paint();
-                p.setColor(Color.BLACK);
-                c.drawLine(0f,0f,20f,0f, p);
-                super.onDraw(c, parent, state);
-            }
-        });*/
     }
 
 
     @Override
     protected void onDestroy(){
-        Log.d(LOG_TAG, "ONDESTROY");
+        //Log.d(LOG_TAG, "ONDESTROY");
         super.onDestroy();
     }
 
@@ -153,11 +133,7 @@ public class HistActivity extends AppCompatActivity implements SwipeRefreshLayou
         int id = item.getItemId();
 
         if (id == R.id.clear_data) {
-            // Add a toast just for confirmation
-            //Toast.makeText(this, getString(R.string.menu_history_delete_message),
-            //        Toast.LENGTH_SHORT).show();
 
-            // Delete the existing data
             new HistAsyncTask(mDB, null).execute(HistAsyncTask.DELETE);
             new GMActiveAsyncTask(mDB, "").execute(GMActiveAsyncTask.DELETE_ALL);
             new MemoAsyncTask(mDB, "").execute(MemoAsyncTask.DELETE);

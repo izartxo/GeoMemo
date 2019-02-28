@@ -44,18 +44,7 @@ public class ShowActivity extends AppCompatActivity implements SwipeRefreshLayou
     SwipeRefreshLayout swipeRefreshLayout;
 
 
-    /*@BindView(R.id.show_geomemo_textview)
-    TextView tGeoMemoInfo;
-*/
-   /* @BindView(R.id.test_button)
-    Button test;
-    @OnClick(R.id.test_button)
-    public void test(){
-        //mDB.geofenceMemoDao().insertGeoMemo(GMFactory.createGeoMemo("yyyy","dddd","234234","4234"));
-        mDB.geofenceMemoDao().deleteAll();
-        mDB.gmActivesDao().deleteAll();
-        mDB.gmHistoryDao().deleteAll();
-    }*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +67,7 @@ public class ShowActivity extends AppCompatActivity implements SwipeRefreshLayou
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //What to do on back clicked
+
                 finish();
             }
         });
@@ -117,7 +106,7 @@ public class ShowActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     protected void onDestroy(){
-        Log.d(LOG_TAG, "ONDESTROY");
+        //Log.d(LOG_TAG, "ONDESTROY");
         super.onDestroy();
     }
 
@@ -137,7 +126,7 @@ public class ShowActivity extends AppCompatActivity implements SwipeRefreshLayou
         showViewModel.getGeoMemoList().observe(this, new Observer<List<GMActives>>() {
             @Override
             public void onChanged(@Nullable List<GMActives> geofenceMemos) {
-                Log.d(LOG_TAG, "Updating Database changes geomemos.....");
+                //Log.d(LOG_TAG, "Updating Database changes geomemos.....");
                 mShowGeoMemoAdapter.setGeoMemoData(geofenceMemos);
                 mShowGeoMemoAdapter.notifyDataSetChanged();
             }
