@@ -1,6 +1,7 @@
 package geomemo.app.code.develop.izartxo.geomemoapp.ui;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -8,12 +9,15 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -26,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -124,7 +129,7 @@ public class MenuMainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        toolbar.setTitle("GeoMemoApp");
+        toolbar.setTitle(getString(R.string.app_name));
 
 
         setSupportActionBar(toolbar);
@@ -133,12 +138,14 @@ public class MenuMainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // !!!! Tranpa dago eginda hemen birpasatu
-        if (false && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)) {
+        /*if (false && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)) {
             startForegroundService(new Intent(this,BroadcastService.class));
         }
         else {
             startGeoMemoService();
-        }
+        }*/
+
+        startGeoMemoService();
         configureViewModel();
 
        // activateSettings();
@@ -163,7 +170,8 @@ public class MenuMainActivity extends AppCompatActivity {
         super.onResume();
         Log.d(LOG_TAG, "ONRESUME");
         enableButtons();
-        checkPermissions();
+        //checkPermissions();
+        statusCheck();
 
     }
 
@@ -468,6 +476,40 @@ public class MenuMainActivity extends AppCompatActivity {
 
     }
 
+    public void statusCheck(){
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        final WifiManager wmanager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER) || !wmanager.isWifiEnabled()){
+            buildAlertMessageNoGpsWifi(wmanager.isWifiEnabled()?true:false);
+        }
+    }
+
+    private void buildAlertMessageNoGpsWifi(final boolean wifi){
+        TextView customTitle = new TextView(this);
+        customTitle.setText(getString(R.string.dialog_permission_title));
+        customTitle.setBackgroundColor(getColor(R.color.GMcolorAccent));
+        customTitle.setTextColor(getColor(R.color.GMcolorText));
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCustomTitle(customTitle)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.dialog_permission_settings), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (wifi)
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        else
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_permission_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
 
 }

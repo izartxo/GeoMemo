@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- https://developer.android.com/guide/topics/location/strategies#java -->
     <uses-feature android:name="android.hardware.location.gps" />
@@ -27,7 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MapActivity" />
         <activity android:name=".ui.ShowActivity" />
         <activity android:name=".ui.HistActivity" />
 
